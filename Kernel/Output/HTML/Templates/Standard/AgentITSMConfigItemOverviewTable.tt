@@ -1,0 +1,244 @@
+# --
+# Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+<script type="text/javascript">
+var editableColumns = [];
+var ecCounter=-1;
+</script>
+<div id="OverviewBody" class="Overview TicketList">
+    <table class="TableSmall" summary="A generic ITSM Configuration Item table" id="CMDBTable">
+        [% Data.StyleClasses %]
+        <thead>
+            <tr>
+[% RenderBlockStart("RecordBulkActionHeader") %]
+<script type="text/javascript">ecCounter++;</script>
+                <th class="Checkbox Fixed">
+                    <input type="checkbox" class="Checkbox" title="[% Translate("Select all") | html %]" id="SelectAllConfigItems" autocomplete="off" />
+                </th>
+[% RenderBlockEnd("RecordBulkActionHeader") %]
+[% RenderBlockStart("RecordCurInciSignalHeader") %]
+<script type="text/javascript">ecCounter++;</script>
+                <th class="">
+#                    <span>[% Translate("Incident State") | html %]</span>
+                    <span>[% Translate("Operational") | html %]</span>
+                </th>
+[% RenderBlockEnd("RecordCurInciSignalHeader") %]
+[% RenderBlockStart("RecordCurDeplSignalHeader") %]
+<script type="text/javascript">ecCounter++;</script>
+                <th>
+                    <span>[% Translate("Deployment State") | html %]</span>
+                </th>
+[% RenderBlockEnd("RecordCurDeplSignalHeader") %]
+[% RenderBlockStart("RecordNumberHeader") %]
+<script type="text/javascript">ecCounter++;</script>
+                <th class="Number [% Data.CSS | html %]">
+                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortByAfter=Number;OrderBy=[% Data.OrderBy | uri %]">[% Config("ITSMConfigItem::Hook") %]</a>
+                </th>
+[% RenderBlockEnd("RecordNumberHeader") %]
+[% RenderBlockStart("RecordNameHeader") %]
+<script type="text/javascript">
+ecCounter++;
+editableColumns.push([ecCounter,'Name'])
+</script>
+                <th class="Name [% Data.CSS | html %]">
+                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortByAfter=Name;OrderBy=[% Data.OrderBy | uri %]">[% Translate("Name") | html %]</a>
+                </th>
+[% RenderBlockEnd("RecordNameHeader") %]
+[% RenderBlockStart("RecordClassHeader") %]
+<script type="text/javascript">ecCounter++;</script>
+                <th class="Class [% Data.CSS | html %]">
+                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortByAfter=ClassID;OrderBy=[% Data.OrderBy | uri %]">[% Translate("Class") | html %]</a>
+                </th>
+[% RenderBlockEnd("RecordClassHeader") %]
+[% RenderBlockStart("RecordCurDeplStateHeader") %]
+<script type="text/javascript">
+ecCounter++;
+editableColumns.push([ecCounter,'DeplStateID','{[% RenderBlockStart("DlState") %]"[% Data.ID %]":"[% Translate(Data.State) | html %]"[% Data.Comma %][% RenderBlockEnd("DlState")%]}']);
+</script>
+                <th class="CurDeplState [% Data.CSS | html %]">
+                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortByAfter=DeplStateID;OrderBy=[% Data.OrderBy | uri %]">[% Translate("Deployment State") | html %]</a>
+                </th>
+[% RenderBlockEnd("RecordCurDeplStateHeader") %]
+[% RenderBlockStart("RecordCurDeplStateTypeHeader") %]
+<script type="text/javascript">ecCounter++;</script>
+                <th>
+                    <span>[% Translate("Deployment State Type") | html %]</span>
+                </th>
+[% RenderBlockEnd("RecordCurDeplStateTypeHeader") %]
+[% RenderBlockStart("RecordCurInciStateHeader") %]
+<script type="text/javascript">
+ecCounter++;
+</script>
+                <th class="CurInciState [% Data.CSS | html %]">
+                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortByAfter=InciStateID;OrderBy=[% Data.OrderBy | uri %]">[% Translate("Operational") | html %]</a>
+                </th>
+[% RenderBlockEnd("RecordCurInciStateHeader") %]
+[% RenderBlockStart("RecordCurInciStateTypeHeader") %]
+<script type="text/javascript">ecCounter++;</script>
+                <th>
+                    <span>[% Translate("Current Incident State Type") | html %]</span>
+                </th>
+[% RenderBlockEnd("RecordCurInciStateTypeHeader") %]
+[% RenderBlockStart("RecordXMLAttributeHeader") %]
+                <th class="[% Data.CSS | html %]">
+                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortByAfter=[% Data.Name | uri %];OrderBy=[% Data.OrderBy | uri %]">
+################################ [% Data.Name  %]          
+          [% Translate(Data.XMLAttributeHeader) | html %]
+                    </a>
+                </th>
+[% RenderBlockEnd("RecordXMLAttributeHeader") %]
+[% RenderBlockStart("RecordLastChangedHeader") %]
+                <th class="LastChanged [% Data.CSS | html %]">
+                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortByAfter=ChangeTime;OrderBy=[% Data.OrderBy | uri %]">[% Translate("Last changed") | html %]</a>
+                </th>
+[% RenderBlockEnd("RecordLastChangedHeader") %]
+            </tr>
+        </thead>
+        <tbody>
+[% RenderBlockStart("NoDataFoundMsg") %]
+            <tr>
+                <td colspan="[% Data.TotalColumns | html %]">
+                    [% Translate("No data found.") | html %]
+                </td>
+            </tr>
+[% RenderBlockEnd("NoDataFoundMsg") %]
+[% RenderBlockStart("Record") %]
+            <tr id="ConfigItemID_[% Data.ConfigItemID | html %]"  data-cmdb-id="[% Data.ConfigItemID | html %]" class="MasterAction">
+[% RenderBlockStart("RecordBulkAction") %]
+                <td class="Checkbox Fixed NonTextContent">
+                    <input class="Checkbox" type="checkbox" name="ConfigItemID" value="[% Data.ConfigItemID | html %]"  autocomplete="off" />
+                </td>
+[% RenderBlockEnd("RecordBulkAction") %]
+[% RenderBlockStart("RecordCurInciSignal") %]
+                <td title="[% Translate(Data.CurInciState) | html %]">
+                    <div class="Flag Small">
+                        <span class="[% Data.CurInciSignal | html %]">"[% Translate(Data.CurInciState) | html %]"</span>
+                    </div>
+                </td>
+[% RenderBlockEnd("RecordCurInciSignal") %]
+[% RenderBlockStart("RecordCurDeplSignal") %]
+                <td title="[% Translate(Data.CurDeplState) | html %]">
+                    <div class="Flag Small">
+                        <span class="[% Data.CurDeplSignal | html %]">"[% Translate(Data.CurDeplState) | html %]"</span>
+                    </div>
+                </td>
+[% RenderBlockEnd("RecordCurDeplSignal") %]
+[% RenderBlockStart("RecordNumber") %]
+<td>[% RenderBlockStart("RecordNumberLinkStart") %]
+<a href="[% Env("Baselink") %]Action=AgentITSMConfigItemZoom;ConfigItemID=[% Data.ConfigItemID | uri %]" title="[% Data.Number | uri %]" class="MasterActionLink">
+[% RenderBlockEnd("RecordNumberLinkStart") %][% Data.Number | html %][% RenderBlockStart("RecordNumberLinkEnd") %]</a>[% RenderBlockEnd("RecordNumberLinkEnd") %]</td>
+[% RenderBlockEnd("RecordNumber") %]
+[% RenderBlockStart("RecordName") %]
+                <td>
+[% RenderBlockStart("RecordNameLinkStart") %]
+#                    <a href="[% Env("Baselink") %]Action=AgentITSMConfigItemZoom;ConfigItemID=[% Data.ConfigItemID | uri %]" title="[% Data.Name | uri %]" class="MasterActionLink">
+[% RenderBlockEnd("RecordNameLinkStart") %]
+#<div title="[% Data.Name | html %]">
+#[% Data.Name | truncate(40) | html %]
+[% Data.Name | html %]
+#</div>
+[% RenderBlockStart("RecordNameLinkEnd") %]
+#                    </a>
+[% RenderBlockEnd("RecordNameLinkEnd") %]
+</td>
+[% RenderBlockEnd("RecordName") %]
+[% RenderBlockStart("RecordClass") %]
+                <td>
+                    <div title="[% Translate(Data.Class) | html %]">[% Translate(Data.Class) | html %]</div>
+                </td>
+[% RenderBlockEnd("RecordClass") %]
+[% RenderBlockStart("RecordCurDeplState") %]
+<td><div title="[% Translate(Data.CurDeplState) | html %]">[% Translate(Data.CurDeplState) | html %]</div></td>
+[% RenderBlockEnd("RecordCurDeplState") %]
+[% RenderBlockStart("RecordCurDeplStateType") %]
+<td><div title="[% Translate(Data.CurDeplStateType) | html %]">[% Translate(Data.CurDeplStateType) | html %]</div></td>
+[% RenderBlockEnd("RecordCurDeplStateType") %]
+[% RenderBlockStart("RecordCurInciState") %]
+<td><div title="[% Translate(Data.CurInciState) | html %]">[% Translate(Data.CurInciState) | html %]</div></td>
+[% RenderBlockEnd("RecordCurInciState") %]
+[% RenderBlockStart("RecordCurInciStateType") %]
+<td><div title="[% Translate(Data.CurInciStateType) | html %]">[% Translate(Data.CurInciStateType) | html %]</div></td>
+[% RenderBlockEnd("RecordCurInciStateType") %]
+[% RenderBlockStart("RecordXMLAttribute") %]<td>[% Data.XMLAttributeData | html %]</td>[% RenderBlockEnd("RecordXMLAttribute") %]
+[% RenderBlockStart("RecordLastChanged") %]
+                <td>
+                    <div title="[% Data.CreateTime | Localize("TimeLong") %]">[% Data.CreateTime | Localize("TimeLong") %]</div>
+                </td>
+[% RenderBlockEnd("RecordLastChanged") %]
+            </tr>
+
+[% RenderBlockStart("DocumentReadyActionRowAdd") %]
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+    ITSM.UI.ConfigItemActionRow.AddActions($('#ConfigItemID_[% Data.ConfigItemID | html %]'), [% Data.Data %]);
+//]]></script>
+[% END %]
+[% RenderBlockEnd("DocumentReadyActionRowAdd") %]
+
+[% RenderBlockEnd("Record") %]
+        </tbody>
+    </table>
+</div>
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+
+    /*global ITSM: true */
+    ITSM.UI.ConfigItemActionRow.Init();
+
+    Core.UI.InitCheckboxSelection($('table td.Checkbox'));
+
+
+
+[% RenderBlockStart("EditableColumn") %]
+	ecCounter++;
+[% RenderBlockStart("EditableColumnText") %]
+	editableColumns.push(
+		[ecCounter,'[% Data.Name %]']
+		);
+[% RenderBlockEnd("EditableColumnText") %]
+[% RenderBlockStart("EditableColumnGeneralCatalog") %]
+	editableColumns.push(
+		[ecCounter,'[% Data.Name %]','{[% Data.GeneralCatalog %]}']
+		);
+[% RenderBlockEnd("EditableColumnGeneralCatalog") %]
+[% RenderBlockEnd("EditableColumn") %]
+   
+$('#CMDBTable').Tabledit({
+    url: '[% Env("Baselink") %]Action=AgentITSMConfigItemAjaxUpdate',
+    editButton: false,
+    deleteButton: false,
+    hideIdentifier: true,
+    rowIdentifier:'data-cmdb-number',
+    columns: {
+        identifier: [2, 'ConfigItem'],
+        editable: editableColumns,
+    },
+    onSuccess: function(data, textStatus, jqXHR) {
+        console.log('onSuccess(data, textStatus, jqXHR)');
+        console.log(data);
+        console.log(textStatus);
+        console.log(jqXHR);
+    },
+    onFail: function(jqXHR, textStatus, errorThrown) {
+        console.log('onFail(jqXHR, textStatus, errorThrown)');
+        console.log(jqXHR);
+        console.log(textStatus);
+        console.log(errorThrown);
+    },
+});
+
+<!--    $('.MasterAction').bind('click', function (Event) {-->
+<!--        var $MasterActionLink = $(this).find('.MasterActionLink');-->
+<!--        // only act if the link was not clicked directly-->
+<!--        if (Event.target !== $MasterActionLink.get(0)) {-->
+<!--            window.location = $MasterActionLink.attr('href');-->
+<!--            return false;-->
+<!--        }-->
+<!--    });-->
+    
+//]]></script>
+[% END %]
