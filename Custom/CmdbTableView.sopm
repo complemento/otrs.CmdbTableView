@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
     <Name>CmdbTableView</Name>
-    <Version>5.0.0</Version>
-    <Framework>5.0.x</Framework>
+    <Version>6.0.0</Version>
+    <Framework>6.0.x</Framework>
     <Vendor>Complemento - Liberdade e Tecnologia</Vendor>
     <URL>http://www.complemento.net.br/</URL>
     <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
@@ -10,7 +10,7 @@
     <Filelist>
         <File Permission="644" Location="Custom/CmdbTableView.sopm"></File>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMConfigItemOverviewTable.tt"></File>
-        <File Permission="644" Location="Kernel/Config/Files/ComplementoCmdbTableView.xml"></File>
+        <File Permission="644" Location="Kernel/Config/Files/XML/ComplementoCmdbTableView.xml"></File>
         <File Permission="644" Location="Kernel/Output/HTML/ITSMConfigItem/OverviewTable.pm"></File>
         <File Permission="644" Location="Kernel/Modules/AgentITSMConfigItemAjaxUpdate.pm"></File>
         <File Permission="644" Location="var/httpd/htdocs/js/thirdparty/tableedit/jquery.tabledit.min.js"></File>
