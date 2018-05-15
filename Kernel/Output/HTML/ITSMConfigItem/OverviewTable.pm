@@ -168,11 +168,14 @@ sub Run {
         else {
             GROUP:
             for my $Group (@Groups) {
-                next GROUP if !$LayoutObject->{"UserIsGroup[$Group]"};
-                if ( $LayoutObject->{"UserIsGroup[$Group]"} eq 'Yes' ) {
-                    $BulkFeature = 1;
-                    last GROUP;
-                }
+                next GROUP if !$Kernel::OM->Get('Kernel::System::Group')->PermissionCheck(
+                    UserID    => $Self->{UserID},
+                    GroupName => $Group,
+                    Type      => 'rw',
+                );
+
+                $BulkFeature = 1;
+                last GROUP;
             }
         }
     }
@@ -226,9 +229,11 @@ sub Run {
                     # check read only groups
                     ROGROUP:
                     for my $RoGroup ( @{$GroupsRo} ) {
-
-                        next ROGROUP if !$LayoutObject->{"UserIsGroupRo[$RoGroup]"};
-                        next ROGROUP if $LayoutObject->{"UserIsGroupRo[$RoGroup]"} ne 'Yes';
+                        next ROGROUP if !$Kernel::OM->Get('Kernel::System::Group')->PermissionCheck(
+                            UserID    => $Self->{UserID},
+                            GroupName => $RoGroup,
+                            Type      => 'ro',
+                        );
 
                         # set access
                         $Access = 1;
@@ -238,9 +243,11 @@ sub Run {
                     # check read write groups
                     RWGROUP:
                     for my $RwGroup ( @{$GroupsRw} ) {
-
-                        next RWGROUP if !$LayoutObject->{"UserIsGroup[$RwGroup]"};
-                        next RWGROUP if $LayoutObject->{"UserIsGroup[$RwGroup]"} ne 'Yes';
+                        next RWGROUP if !$Kernel::OM->Get('Kernel::System::Group')->PermissionCheck(
+                            UserID    => $Self->{UserID},
+                            GroupName => $RwGroup,
+                            Type      => 'rw',
+                        );
 
                         # set access
                         $Access = 1;
@@ -649,18 +656,22 @@ END
                     $ActionItem->{Link} =~ s{ \Q[% Data.VersionID | html %]\E }{$ConfigItem->{VersionID}}xmsg;
                 }
 
-                my $JSON = $LayoutObject->JSONEncode(
-                    Data => $ClonedActionItems,
-                );
+            #    my $JSON = $LayoutObject->JSONEncode(
+            #        Data => $ClonedActionItems,
+            #    );
 
-                $LayoutObject->Block(
-                    Name => 'DocumentReadyActionRowAdd',
-                    Data => {
-                        ConfigItemID => $ConfigItemID,
-                        Data         => $JSON,
-                    },
+            #    $LayoutObject->Block(
+            #        Name => 'DocumentReadyActionRowAdd',
+            #        Data => {
+            #            ConfigItemID => $ConfigItemID,
+            #            Data         => $JSON,
+            #        },
+            #    );
+                   $LayoutObject->AddJSData(
+                    Key   => 'ITSMConfigItemActionRow.' . $ConfigItemID,
+                    Value => $ClonedActionItems,
                 );
-            }
+			}
         }
     }
 
