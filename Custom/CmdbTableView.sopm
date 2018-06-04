@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
     <Name>CmdbTableView</Name>
-    <Version>6.0.1</Version>
+    <Version>6.0.2</Version>
     <Framework>6.0.x</Framework>
-    <Vendor>Complemento [Free]</Vendor>
+    <Vendor>Ligero [Community]</Vendor>
     <URL>http://www.complemento.net.br/</URL>
     <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
     <Description Lang="en">Clean OTRS View Zoom</Description>
@@ -11,7 +11,7 @@
         <File Permission="644" Location="Custom/CmdbTableView.sopm"></File>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMConfigItemOverviewTable.tt"></File>
 		<File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMConfigItemOverviewSmall.tt"></File>
-        <File Permission="644" Location="Kernel/Config/Files/ComplementoCmdbTableView.xml"></File>
+        <File Permission="644" Location="Kernel/Config/Files/XML/ComplementoCmdbTableView.xml"></File>
         <File Permission="644" Location="Kernel/Output/HTML/ITSMConfigItem/OverviewTable.pm"></File>
         <File Permission="644" Location="Kernel/Modules/AgentITSMConfigItemAjaxUpdate.pm"></File>
 		<File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.ConfigItem.Overview.js"></File>
