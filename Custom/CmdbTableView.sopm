@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
     <Name>CmdbTableView</Name>
-    <Version>6.0.2</Version>
+    <Version>6.0.3</Version>
     <Framework>6.0.x</Framework>
     <Vendor>Ligero [Community]</Vendor>
     <URL>http://www.complemento.net.br/</URL>
     <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
-    <Description Lang="en">Clean OTRS View Zoom</Description>
+    <Description Lang="en">CMDB Table View with the possibility to edit Config Item attributes directly.</Description>
     <Filelist>
         <File Permission="644" Location="Custom/CmdbTableView.sopm"></File>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMConfigItemOverviewTable.tt"></File>
-		<File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMConfigItemOverviewSmall.tt"></File>
         <File Permission="644" Location="Kernel/Config/Files/XML/ComplementoCmdbTableView.xml"></File>
         <File Permission="644" Location="Kernel/Output/HTML/ITSMConfigItem/OverviewTable.pm"></File>
         <File Permission="644" Location="Kernel/Modules/AgentITSMConfigItemAjaxUpdate.pm"></File>
-		<File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.ConfigItem.Overview.js"></File>
         <File Permission="644" Location="var/httpd/htdocs/js/thirdparty/tableedit/jquery.tabledit.min.js"></File>
     </Filelist>
 </otrs_package>
